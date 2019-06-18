@@ -1,0 +1,53 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+    <link rel="stylesheet" href="css.css">
+</head>
+<body>
+<center>
+    <canvas id="canvas" width="800" height="600" style="border: 1px solid gray;"></canvas>
+</center>
+<script src="js.js">
+
+</script>
+<script>
+    let ball = new Ball();
+    let bar = new Bar();
+    function moveBar(event) {
+        switch (event.keyCode) {
+            case 37: {
+                bar.moveLeft();
+                break;
+            }
+            case 39: {
+                bar.moveRight();
+                break;
+            }
+
+        }
+    }
+    function run() {
+        window.addEventListener('keydown',moveBar);
+    }
+    function draw() {
+        CTX.clearRect(0,0,MAPWIDTH,MAPHEIGHT);
+        ball.draw(CTX);
+        bar.drawBar(CTX);
+    }
+    function update() {
+        ball.moveBall();
+        ball.checkCollision(bar);
+        draw();
+    }
+    window.onload = function () {
+        let interval = 10;
+        run();
+        ball = new Ball();
+        setInterval("update()",interval);
+    };
+
+</script>
+</body>
+</html>
