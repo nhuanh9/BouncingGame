@@ -1,21 +1,21 @@
+const BALL_DEFAULT_POSITION_X = 300;
+const BALL_DEFAULT_POSITION_Y = 50;
 const RADIUS = 15;
 const SPEED = 3;
 const MAPWIDTH = document.getElementById("canvas").offsetWidth;
 const MAPHEIGHT = document.getElementById("canvas").offsetHeight;
 const CTX = document.getElementById("canvas").getContext("2d");
 
-const BAR_DEFAULT_POSITION_X = 300;
-const BAR_DEFAULT_POSITION_Y = 510;
 const BAR_DEFAULT_WIDTH = 100;
 const BAR_DEFAULT_HEIGHT = 15;
-const BAR_DEFAULT_SPEED = 20;
+const BAR_DEFAULT_SPEED = 25;
 
 let Ball = function () {
     this.radius = RADIUS;
     this.speedX = SPEED;
     this.speedY = SPEED;
-    this.cx = Math.floor(Math.random()*(MAPWIDTH - this.radius))+this.radius;
-    this.cy = Math.floor(Math.random()*(MAPHEIGHT - this.radius))+this.radius;
+    this.cx = BALL_DEFAULT_POSITION_X;
+    this.cy = BALL_DEFAULT_POSITION_Y;
 
     this.draw = function (ctx) {
         ctx.beginPath();
@@ -34,7 +34,7 @@ let Ball = function () {
     };
 
     this.checkCollision = function (bar) {
-        let isTouchBar =  ((this.bottom >= 510)&&(this.left>=bar.getX()&&this.left<=(bar.getX()+BAR_DEFAULT_WIDTH)));
+        let isTouchBar =  ((this.bottom>=bar.getY() && this.cy < bar.getY()+bar.height)&&(this.left>bar.getX()&&this.left<(bar.getX()+bar.width)));
         let isLeft = this.left <= 0;
         let isRight = this.right >= MAPWIDTH;
         let isTop = this.top <= 0;
@@ -42,19 +42,19 @@ let Ball = function () {
         if (isLeft|| isRight) {
             this.speedX = -this.speedX;
         }
-        if (isTop || isTouchBar) {
+        if (isTop || isTouchBar ) {
             this.speedY = -this.speedY;
         }
         if (isBot){
             alert("You Lose");
-            this.cx = Math.floor(Math.random()*(MAPWIDTH - this.radius))+this.radius;
-            this.cy = Math.floor(Math.random()*(MAPHEIGHT - this.radius))+this.radius;
+            this.cx = BALL_DEFAULT_POSITION_X;
+            this.cy = BALL_DEFAULT_POSITION_Y;
         }
     }
 };
 let Bar = function () {
-    this.x = BAR_DEFAULT_POSITION_X;
-    this.y = BAR_DEFAULT_POSITION_Y;
+    this.x = MAPWIDTH/2 + BAR_DEFAULT_WIDTH;
+    this.y = MAPHEIGHT*0.85;
     this.width = BAR_DEFAULT_WIDTH;
     this.height = BAR_DEFAULT_HEIGHT;
     this.drawBar = function (ctx) {
