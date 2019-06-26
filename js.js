@@ -34,7 +34,7 @@ let Ball = function () {
     };
 
     this.checkCollision = function (bar) {
-        let isTouchBar =  ((this.bottom>=bar.getY() && this.cy < bar.getY()+bar.height)&&(this.left>bar.getX()&&this.left<(bar.getX()+bar.width)));
+        let isTouchBar =  ((this.bottom>=bar.getY() && this.top < bar.getY()+bar.height)&&(this.right>bar.getX()&&this.left<(bar.getX()+bar.width)));
         let isLeft = this.left <= 0;
         let isRight = this.right >= MAPWIDTH;
         let isTop = this.top <= 0;
